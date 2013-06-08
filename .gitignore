@@ -1,5 +1,7 @@
 # built application files
 # *.apk - I want to check this in
+# from https://github.com/github/gitignore/blob/master/Android.gitignore
+#
 *.ap_
 
 # files for the dex VM
