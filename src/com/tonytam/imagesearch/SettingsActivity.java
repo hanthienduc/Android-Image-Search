@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +24,10 @@ public class SettingsActivity extends Activity {
 		loadSpinner("size", R.id.spImageSize, R.array.image_size_array);
 		loadSpinner("color", R.id.spColorFilter, R.array.color_filter_array);
 		loadSpinner("type", R.id.spImageType, R.array.image_type_filter_array);
+		EditText etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);		
+		
+		Map <String,String> prefs = ImageSearchSettings.loadPreferences(this);
+		etSiteFilter.setText (prefs.get("site").toString());
 	}
 
 	public void loadSpinner(String prefKeyName, int res, int resArray) {
@@ -41,7 +46,7 @@ public class SettingsActivity extends Activity {
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		Map <String,String> prefs = loadPreferences();
+		Map <String,String> prefs = ImageSearchSettings.loadPreferences(this);
 		
 		// Apply the adapter to the spinner		
 		spinner.setAdapter(adapter);
@@ -63,24 +68,19 @@ public class SettingsActivity extends Activity {
 		Spinner spinner = (Spinner) findViewById(R.id.spImageSize);
 		Spinner spinnerColorFilter = (Spinner) findViewById(R.id.spColorFilter);
 		Spinner spinnerImageType = (Spinner) findViewById(R.id.spImageType);
-		TextView tvSiteFilter = (TextView) findViewById(R.id.tvSiteFilter);		
+		EditText etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);		
 		
-	    SharedPreferences settings = getPreferences(MODE_WORLD_READABLE);
+	    SharedPreferences settings = getSharedPreferences("ImageSearchPrefs", MODE_PRIVATE);
 	    SharedPreferences.Editor ed = settings.edit();
 	    ed.putString("size", spinner.getSelectedItem().toString());
 	    ed.putString("color", spinnerColorFilter.getSelectedItem().toString());
 	    ed.putString("type", spinnerImageType.getSelectedItem().toString());
-	    ed.putString("site", tvSiteFilter.toString());
+	    ed.putString("site", etSiteFilter.getText().toString());
 	    ed.commit();
 	    Log.d("DEBUG", settings.toString());
 	}
 
-	public Map<String,String> loadPreferences () {
-	    SharedPreferences settings = getPreferences(MODE_WORLD_READABLE);
-	    Log.d("DEBUG", settings.getAll().toString());
-		return (Map<String,String>) settings.getAll();
-	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

@@ -1,6 +1,7 @@
 package com.tonytam.imagesearch;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +67,9 @@ public class SearchActivity extends Activity {
 			
 		});
 
+		// Load preferences
+		Map <String,String> prefs = ImageSearchSettings.loadPreferences((Activity) this);
+		Log.d("DEBUG", prefs.toString());
 	}
 
 	public void setupViews() {
