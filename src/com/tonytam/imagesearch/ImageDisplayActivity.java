@@ -26,27 +26,29 @@ public class ImageDisplayActivity extends Activity {
 	/*
 	 * Show the full size image, loading it asynchronously
 	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 * TODO: Change the title to search for <term>
+	 * @see android.app.Activity#onCreate(android.os.Bundle) TODO: Change the
+	 * title to search for <term>
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_image_display);
-		
+
 		// The calling intent must pass ImageResult
-		ImageResult result = (ImageResult) getIntent().getSerializableExtra("result");
+		ImageResult result = (ImageResult) getIntent().getSerializableExtra(
+				"result");
 		if (result.getClass() == ImageResult.class) {
 			SmartImageView ivImage = (SmartImageView) findViewById(R.id.ivResult);
 			ivImage.setImageUrl(result.getFullUrl());
 		} else {
-			Log.d("DEBUG", "ImageDisplayActivity::onCreate did not see ImageResult in getIntent() getExtra for 'result'");
+			Log.d("DEBUG",
+					"ImageDisplayActivity::onCreate did not see ImageResult in getIntent() getExtra for 'result'");
 		}
 	}
 
 	/*
-	 *
+	 * 
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
 	@Override
