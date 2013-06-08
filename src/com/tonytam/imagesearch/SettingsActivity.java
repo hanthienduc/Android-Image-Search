@@ -19,40 +19,43 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 		
-		// Populate Image Size
-		Spinner spinner = (Spinner) findViewById(R.id.spImageSize);
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.image_size_array, android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner.setAdapter(adapter);
-		
-		// Populate Color Filter
-		Spinner spinnerColorFilter = (Spinner) findViewById(R.id.spColorFilter);
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapterColorFilter = ArrayAdapter.createFromResource(this,
-		        R.array.color_filter_array, android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinnerColorFilter.setAdapter(adapterColorFilter);
-		
-		// Populate Image Type
-		Spinner spinnerImageType = (Spinner) findViewById(R.id.spImageType);
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapterImageType = ArrayAdapter.createFromResource(this,
-		        R.array.image_type_filter_array, android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinnerImageType.setAdapter(adapterImageType);		
 
-		loadPreferences();
-
+		loadSpinner("size", R.id.spImageSize, R.array.image_size_array);
+		loadSpinner("color", R.id.spColorFilter, R.array.color_filter_array);
+		loadSpinner("type", R.id.spImageType, R.array.image_type_filter_array);
 	}
 
+	public void loadSpinner(String prefKeyName, int res, int resArray) {
+		// Populate Image Type
+		Spinner spinner = (Spinner) findViewById(res);
+		
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> adapter = 
+				ArrayAdapter.createFromResource
+					(
+							this,
+							resArray, 
+							android.R.layout.simple_spinner_item
+							);
+		
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		Map <String,String> prefs = loadPreferences();
+		
+		// Apply the adapter to the spinner		
+		spinner.setAdapter(adapter);
+		for(int i=0; i < adapter.getCount(); i++) {
+			Log.d("DEBUG", "preference key "+ prefKeyName);
+			if (prefs != null  && prefs.get(prefKeyName) != null) {	
+				if (prefs.get(prefKeyName).trim().equals(adapter.getItem(i).toString())) {
+					spinner.setSelection(i);
+				}
+			}
+		}
+		
+	}
+	
 	public void onSavePreference(View v) {
 		Log.d("DEBUG", "user clicked save preferences");
 		
@@ -75,7 +78,7 @@ public class SettingsActivity extends Activity {
 	public Map<String,String> loadPreferences () {
 	    SharedPreferences settings = getPreferences(MODE_WORLD_READABLE);
 	    Log.d("DEBUG", settings.getAll().toString());
-		return null;
+		return (Map<String,String>) settings.getAll();
 	}
 	
 	@Override
