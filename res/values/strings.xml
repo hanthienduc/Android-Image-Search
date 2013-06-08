@@ -7,5 +7,6 @@
     <string name="enter_search_term">enter search terms</string>
     <string name="title_activity_image_display">Matching: </string>
     <string name="app_title">Image Search</string>
+    <string name="search">Search</string>
 
 </resources>
