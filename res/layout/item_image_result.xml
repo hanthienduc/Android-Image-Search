@@ -4,3 +4,9 @@
     android:layout_height="75dp" >
 
 </com.loopj.android.image.SmartImageView>
+<!--
+ImageResultArrayAdaptor will inflate this
+
+Thumbnail of the image
+TODO: resize, instead of fixed size 
+-->

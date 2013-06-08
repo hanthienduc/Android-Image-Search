@@ -24,6 +24,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 
+/*
+ * The main screen allowing users to search for an image
+ */
 public class SearchActivity extends Activity {
 	EditText etQuery;
 	GridView gvImageResult;
@@ -39,6 +42,10 @@ public class SearchActivity extends Activity {
 		imageAdapter = new ImageResultArrayAdapter(this,  imageResults);
 		gvImageResult.setAdapter(imageAdapter);
 		
+		
+		/*
+		 * Click on a thumbnail brings up the full image Activity
+		 */
 		gvImageResult.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -49,8 +56,9 @@ public class SearchActivity extends Activity {
 								);
 					ImageResult imageResult = imageResults.get(position);
 					
-					//i.putExtra("result", imageResult);
-					i.putExtra("result", "hey");
+					i.putExtra("result", imageResult);
+					// TODO, wanted to test this 
+					// i.putExtra("result", "hey");
 
 					startActivity(i);
 			}
@@ -71,6 +79,9 @@ public class SearchActivity extends Activity {
 		return true;
 	}
 
+	/*
+	 * Clicking on an image jumps to the ImageDisplayActivyt
+	 */
 	public void onImageSearch (View v) {
 		String query = etQuery.getText().toString();
 		Toast.makeText(this, "Searching for " + query,  Toast.LENGTH_SHORT)
@@ -84,6 +95,7 @@ public class SearchActivity extends Activity {
 		// TODO: Handle no data connection
 		// TODO: Handle timeout
 		// TOOD: Handle empty results
+		// TODO: use YQL?
 		client.get("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8" + 
 					"&start=" + 0 + 
 					"&v=1.0" + 

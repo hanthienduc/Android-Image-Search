@@ -7,7 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-// Data model for the results coming from Google Image Search API
+/*
+ * Data model for the results coming from Google Image Search API
+ * 
+ */
 public class ImageResult implements Serializable {
 	// TODO
 	private static final long serialVersionUID = 111111111;
@@ -25,12 +28,20 @@ public class ImageResult implements Serializable {
 		}
 		
 	}
+	
+	/*
+	 * Full size image
+	 */
 	public String getFullUrl() {
 		return fullUrl;
 	}
 	public void setFullUrl(String fullUrl) {
 		this.fullUrl = fullUrl;
 	}
+	
+	/*
+	 * Thumb nail drive
+	 */
 	public String getThumbUrl() {
 		return thumbUrl;
 	}
@@ -42,6 +53,9 @@ public class ImageResult implements Serializable {
 		return this.thumbUrl;
 	}
 	
+	/*
+	 * convert JSAON to ArrayList
+	 */
 	public static ArrayList <ImageResult> fromJSONArray(
 			JSONArray array) {
 		
