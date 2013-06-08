@@ -14,3 +14,4 @@ TODO
 - hitting done on the text search box should just do the search
 - add pagination
 - add swipe left and right
+- any way to show some text as well when large image shows
