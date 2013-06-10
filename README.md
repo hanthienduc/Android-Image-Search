@@ -25,9 +25,11 @@ Subsequent searches will have these filters applied to the results
 User should be able to load more images
   User clicks a “Load More” button in the footer of the GridView
   Optional: User can instead scroll “infinitely” to load more image results
-
+  DONE
+  
 Apply the filters from the preferences
-
+  DONE
+  
 Student Learning Actions:
 ==========================
 Explore starting activities with intents that contain user data.

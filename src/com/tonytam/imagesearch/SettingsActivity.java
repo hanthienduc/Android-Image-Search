@@ -82,7 +82,7 @@ public class SettingsActivity extends Activity {
 		);
 
 
-		startActivity(i);
+		startActivityForResult(i,0);
 
 
 	    Log.d("DEBUG", settings.toString());
