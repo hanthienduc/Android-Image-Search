@@ -9,9 +9,10 @@ package com.tonytam.imagesearch;
 
 public final class R {
     public static final class array {
-        public static final int color_filter_array=0x7f060001;
+        public static final int color_filter_array=0x7f060002;
         public static final int image_size_array=0x7f060000;
-        public static final int image_type_filter_array=0x7f060002;
+        public static final int image_type_filter_array=0x7f060003;
+        public static final int safe_array=0x7f060001;
     }
     public static final class attr {
     }
@@ -29,22 +30,24 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_ettings=0x7f09000f;
-        public static final int action_share=0x7f09000e;
+        public static final int action_ettings=0x7f090011;
+        public static final int action_share=0x7f090010;
         public static final int btSearch=0x7f090002;
-        public static final int button1=0x7f09000d;
+        public static final int button1=0x7f09000f;
         public static final int etQuery=0x7f090001;
-        public static final int etSiteFilter=0x7f09000c;
+        public static final int etSiteFilter=0x7f09000e;
         public static final int gvImageResult=0x7f090003;
         public static final int ivResult=0x7f090000;
-        public static final int layoutTop=0x7f090004;
-        public static final int spColorFilter=0x7f090008;
-        public static final int spImageSize=0x7f090006;
-        public static final int spImageType=0x7f09000a;
-        public static final int tvColorFilter=0x7f090007;
-        public static final int tvImageSize=0x7f090005;
-        public static final int tvImageType=0x7f090009;
-        public static final int tvSiteFilter=0x7f09000b;
+        public static final int layoutTop=0x7f090006;
+        public static final int sbPagination=0x7f090004;
+        public static final int spColorFilter=0x7f09000a;
+        public static final int spImageSize=0x7f090008;
+        public static final int spImageType=0x7f09000c;
+        public static final int tvColorFilter=0x7f090009;
+        public static final int tvImageSize=0x7f090007;
+        public static final int tvImageType=0x7f09000b;
+        public static final int tvPage=0x7f090005;
+        public static final int tvSiteFilter=0x7f09000d;
     }
     public static final class layout {
         public static final int activity_image_display=0x7f030000;

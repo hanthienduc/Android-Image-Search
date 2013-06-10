@@ -20,6 +20,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -29,12 +31,18 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 /*
  * The main screen allowing users to search for an image
  */
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity implements
+	SeekBar.OnSeekBarChangeListener
+	{
 	EditText etQuery;
 	GridView gvImageResult;
 	Button btSearch;
+	TextView tvPage;
+	int page = 0;
+	
 	ArrayList<ImageResult> imageResults = new ArrayList<ImageResult>();
 	ImageResultArrayAdapter imageAdapter;
+	Map <String,String>  prefs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +74,14 @@ public class SearchActivity extends Activity {
 			}
 			
 		});
+		/*
+		 * Seekbar
+		 */
+		SeekBar seekBar=(SeekBar)findViewById(R.id.sbPagination);
+		seekBar.setOnSeekBarChangeListener ( (SeekBar.OnSeekBarChangeListener) this);
 
 		// Load preferences
-		Map <String,String> prefs = ImageSearchSettings.loadPreferences((Activity) this);
+		prefs = ImageSearchSettings.loadPreferences((Activity) this);
 		Log.d("DEBUG", prefs.toString());
 	}
 
@@ -76,6 +89,8 @@ public class SearchActivity extends Activity {
 		etQuery = (EditText) findViewById(R.id.etQuery);
 		gvImageResult = (GridView)findViewById(R.id.gvImageResult);
 		btSearch = (Button ) findViewById(R.id.btSearch);
+		tvPage = (TextView) findViewById(R.id.tvPage);
+
 	}
 	
 	@Override
@@ -104,6 +119,8 @@ public class SearchActivity extends Activity {
 	 * Clicking on an image jumps to the ImageDisplayActivyt
 	 */
 	public void onImageSearch (View v) {
+		prefs = ImageSearchSettings.loadPreferences((Activity) this);
+		
 		String query = etQuery.getText().toString();
 		Toast.makeText(this, "Searching for " + query,  Toast.LENGTH_SHORT)
 			.show();
@@ -112,16 +129,24 @@ public class SearchActivity extends Activity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		
 		// Google Image Search
+		// @see : https://developers.google.com/image-search/v1/jsondevguide
 		// https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=android
 		// TODO: Handle no data connection
 		// TODO: Handle timeout
 		// TOOD: Handle empty results
 		// TODO: use YQL?
-		client.get("https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8" + 
-					"&start=" + 0 + 
-					"&v=1.0" + 
-					"&q=" + Uri.encode(query),
-					new JsonHttpResponseHandler() {
+		String url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&rsz=8" + 
+				"&start=" + page * 8 + 
+				"&v=1.0" + 
+				"&q=" + Uri.encode(query) +
+				"&as_sitesearch=" +  Uri.encode(prefs.get("site")) +
+				"&imgcolor=" + Uri.encode(prefs.get("color")) +
+				"&imgtype=" + Uri.encode(prefs.get("type")) +
+				"&imgsz=" + Uri.encode(prefs.get("size"))	;	
+						
+		Log.d("DEBUG", "URL " +   url);
+		client.get(url,
+				new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
 				JSONArray imageJsonResults = null;
@@ -148,4 +173,28 @@ public class SearchActivity extends Activity {
 		
 		);
 	}
+	
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		if (tvPage != null) {
+			// pages start at 0, but show the humans 0+1
+			tvPage.setText(Integer.toString(progress + 1));
+			page = progress;
+			onImageSearch(btSearch);
+		}
+		Log.d("DEBUG", "Seeking to " + progress);
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

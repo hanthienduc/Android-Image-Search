@@ -3,6 +3,7 @@ package com.tonytam.imagesearch;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 public class SettingsActivity extends Activity {
 
@@ -51,7 +51,6 @@ public class SettingsActivity extends Activity {
 		// Apply the adapter to the spinner		
 		spinner.setAdapter(adapter);
 		for(int i=0; i < adapter.getCount(); i++) {
-			Log.d("DEBUG", "preference key "+ prefKeyName);
 			if (prefs != null  && prefs.get(prefKeyName) != null) {	
 				if (prefs.get(prefKeyName).trim().equals(adapter.getItem(i).toString())) {
 					spinner.setSelection(i);
@@ -77,6 +76,15 @@ public class SettingsActivity extends Activity {
 	    ed.putString("type", spinnerImageType.getSelectedItem().toString());
 	    ed.putString("site", etSiteFilter.getText().toString());
 	    ed.commit();
+	    
+		Intent i = new Intent(getApplicationContext(),
+				SearchActivity.class	
+		);
+
+
+		startActivity(i);
+
+
 	    Log.d("DEBUG", settings.toString());
 	}
 

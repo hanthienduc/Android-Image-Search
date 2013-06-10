@@ -16,14 +16,17 @@ User can modify advanced search options such as:
   Color filter (black, blue, brown, gray, green, etc...)
   Type (faces, photo, clip art, line art)
   Site (espn.com)
+  DONE
   
 Subsequent searches will have these filters applied to the results
   - need to persist
+  DONE
   
 User should be able to load more images
   User clicks a “Load More” button in the footer of the GridView
   Optional: User can instead scroll “infinitely” to load more image results
 
+Apply the filters from the preferences
 
 Student Learning Actions:
 ==========================

@@ -18,10 +18,17 @@
     <string name="yahoo_com_site_filter">yahoo.com</string>
 
     <string-array name="image_size_array">
+        <item>icon</item>
         <item>small</item>
         <item>medium</item>
         <item>large</item>
-        <item>extra large</item>
+        <item>xlarge</item>
+        <item>xxlarge</item>
+        <item>huge</item>
+    </string-array>
+    <string-array name="safe_array">
+        <item>active</item>
+        <item>moderate</item>
     </string-array>
     <string-array name="color_filter_array">
         <item>black</item>
@@ -29,12 +36,19 @@
         <item>brown</item>
         <item>gray</item>
         <item>green</item>
+        <item>orange</item>
+        <item>pink</item>
+        <item>purple</item>
+        <item>red</item>
+        <item>teal</item>
+        <item>white</item>
+        <item>yellow</item>
     </string-array>
     <string-array name="image_type_filter_array">
-        <item>faces</item>
+        <item>face</item>
         <item>photo</item>
-        <item>clip art</item>
-        <item>line art</item>
+        <item>clipart</item>
+        <item>lineart</item>
     </string-array>
 
 </resources>
