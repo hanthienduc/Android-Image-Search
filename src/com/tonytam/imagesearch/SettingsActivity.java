@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 public class SettingsActivity extends Activity {
-
+	String prevSearchString;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,7 +28,18 @@ public class SettingsActivity extends Activity {
 		EditText etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);		
 		
 		Map <String,String> prefs = ImageSearchSettings.loadPreferences(this);
-		etSiteFilter.setText (prefs.get("site").toString());
+		if (prefs.get("site") != null) {
+			etSiteFilter.setText (prefs.get("site").toString());
+		}
+		
+		// When this Activity is called somewhere else
+		Bundle extras = getIntent().getExtras();
+		if (extras !=null ) {
+			String searchString = extras.getString(Intent.EXTRA_TEXT);
+			if (searchString != null ) {
+				prevSearchString = searchString;
+			}		
+		}
 	}
 
 	public void loadSpinner(String prefKeyName, int res, int resArray) {
@@ -47,6 +59,10 @@ public class SettingsActivity extends Activity {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		Map <String,String> prefs = ImageSearchSettings.loadPreferences(this);
+		
+		if (prefs == null) {
+			return;
+		}
 		
 		// Apply the adapter to the spinner		
 		spinner.setAdapter(adapter);
@@ -69,6 +85,7 @@ public class SettingsActivity extends Activity {
 		Spinner spinnerImageType = (Spinner) findViewById(R.id.spImageType);
 		EditText etSiteFilter = (EditText) findViewById(R.id.etSiteFilter);		
 		
+		// TODO: I could  move all this to ImageSearchSettings, have to pass in a Map<String,String>
 	    SharedPreferences settings = getSharedPreferences("ImageSearchPrefs", MODE_PRIVATE);
 	    SharedPreferences.Editor ed = settings.edit();
 	    ed.putString("size", spinner.getSelectedItem().toString());
@@ -77,11 +94,14 @@ public class SettingsActivity extends Activity {
 	    ed.putString("site", etSiteFilter.getText().toString());
 	    ed.commit();
 	    
+	    // TODO: how to do I trigger the SearchActivity to do another search
 		Intent i = new Intent(getApplicationContext(),
 				SearchActivity.class	
 		);
 
-
+		if (prevSearchString != null ) {
+			i.putExtra(android.content.Intent.EXTRA_TEXT, prevSearchString);
+		}
 		startActivityForResult(i,0);
 
 
@@ -93,7 +113,7 @@ public class SettingsActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		// we don't need a menu at the settings 
-		getMenuInflater().inflate(R.menu.search, menu);
+		// getMenuInflater().inflate(R.menu.search, menu);
 		return true;
 	}
 

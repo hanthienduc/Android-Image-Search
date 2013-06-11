@@ -49,10 +49,10 @@ public class SearchActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
 		setupViews();
+		
 		imageAdapter = new ImageResultArrayAdapter(this,  imageResults);
 		gvImageResult.setAdapter(imageAdapter);
-		
-		
+				
 		/*
 		 * Click on a thumbnail brings up the full image Activity
 		 */
@@ -83,7 +83,17 @@ public class SearchActivity extends Activity implements
 		// Load preferences
 		prefs = ImageSearchSettings.loadPreferences((Activity) this);
 		Log.d("DEBUG", prefs.toString());
-	}
+		
+		// When this Activity is called somewhere else
+		Bundle extras = getIntent().getExtras();
+		if (extras != null ) {
+			String searchString = extras.getString(Intent.EXTRA_TEXT);
+			if (searchString != null ) {
+				etQuery.setText(searchString);
+				onImageSearch(btSearch);
+			}
+		}
+	}	
 
 	public void setupViews() {
 		etQuery = (EditText) findViewById(R.id.etQuery);
@@ -110,6 +120,9 @@ public class SearchActivity extends Activity implements
 		Intent i = new Intent(getApplicationContext(),
 				  			SettingsActivity.class	
 					);
+		
+		// Save this in the preferences to be handed back to us
+		i.putExtra(android.content.Intent.EXTRA_TEXT, etQuery.getText().toString());
 
 		startActivity(i);
 		return true;
